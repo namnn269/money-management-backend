@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "access.token.expiration",
+    "type": "java.lang.String",
+    "description": "A description for 'access.token.expiration'"
+  },
+  {
+    "name": "email.from",
+    "type": "java.lang.String",
+    "description": "A description for 'email.from'"
+  },
+  {
+    "name": "refresh.token.expiration",
+    "type": "java.lang.String",
+    "description": "A description for 'refresh.token.expiration'"
+  }
+]}

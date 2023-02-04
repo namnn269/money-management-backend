@@ -1,0 +1,53 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: Debug
+        type:
+          descriptor:
+            sql:
+              BasicBinder: Trace
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 12345678
+    url: jdbc:mysql://localhost:3306/money_management
+    username: root
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: false
+        id:
+          new_generator_mappings: true
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 236912110842-7v332p61eln8dbk2nlk2ep4qb7j4r4gv.apps.googleusercontent.com
+            client-secret: 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
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bookstore.reminder@gmail.com
+    password: drwaxsvoeyksoojb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+access:
+  token:
+    expiration: 120
+email:
+  from: bookstore.reminder@gmail.com
+refresh:
+  token:
+    expiration: 120
