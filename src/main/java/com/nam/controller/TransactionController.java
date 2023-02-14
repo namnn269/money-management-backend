@@ -44,7 +44,9 @@ public class TransactionController {
 			@RequestParam(name = "startDate") Date startDate,
 			@RequestParam(name = "endDate") Date endDate,
 			@RequestParam(name = "pageSize") int pageSize,
-			@RequestParam(name = "pageNo") int pageNo) {
+			@RequestParam(name = "pageNo", defaultValue = "1") int pageNo) {
+		if(pageNo <= 0) pageNo = 1;
+		System.out.println(pageNo);
 		Map<String, Object> responses = transactionService
 				.findByPageAndTime(categorySelectedIds,categoryStatusIds,startDate, endDate,pageSize, pageNo);
 		return new ResponseEntity<>(responses,HttpStatus.OK);

@@ -139,6 +139,8 @@ public class UserServiceImpl implements IUserService {
 		User user = optionalUser.get();
 		if (!user.getEmail().equalsIgnoreCase(email))
 			throw new ObjectNotFoundExeption("Email does not match username!");
+		if(!user.isVerifiedEmail())
+			throw new ObjectNotFoundExeption("Email is not verified!");
 		publisher.publishEvent(new ResetPasswordEvent(user, url));
 	}
 

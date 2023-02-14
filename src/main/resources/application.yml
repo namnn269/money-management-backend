@@ -10,9 +10,12 @@ logging:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 12345678
-    url: jdbc:mysql://localhost:3306/money_management
-    username: root
+#    url: jdbc:mysql://localhost:3306/money_management
+#    username: root
+#    password: 12345678
+    url: jdbc:mysql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
   jpa:
     generate-ddl: true
     hibernate:
@@ -34,8 +37,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: bookstore.reminder@gmail.com
-    password: drwaxsvoeyksoojb
+    username: moneymanagement.reminder@gmail.com
+    password: dddgnismxfblotjz
     properties:
       mail:
         smtp:
@@ -47,7 +50,7 @@ access:
   token:
     expiration: 120
 email:
-  from: bookstore.reminder@gmail.com
+  from: moneymanagement.reminder@gmail.com
 refresh:
   token:
     expiration: 120

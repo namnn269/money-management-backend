@@ -21,10 +21,10 @@ public class JwtProvider {
 
 	public static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-	private final Long EXPIRATION_TIME_REFRESH_TOKEN = 1 * 24 * 60 * 60l; // seconds
-	private final Long EXPIRATION_TIME_ACCESS_TOKEN = 10l; // seconds
 	private final String SECRET_ACCESS_TOKEN_KEY = "access_secret";
 	private final String SECRET_REFRESH_TOKEN_KEY = "refresh_secret";
+	private final long EXPIRATION_TIME_REFRESH_TOKEN = 3 * 30 * 24 * 60 * 60; // seconds
+	private final long EXPIRATION_TIME_ACCESS_TOKEN = 60 * 60;  // seconds
 
 	public String generateAccessToken(User user) {
 

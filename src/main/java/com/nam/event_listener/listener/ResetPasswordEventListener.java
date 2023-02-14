@@ -12,6 +12,7 @@ import com.nam.entity.User;
 import com.nam.event_listener.ResetPasswordEvent;
 import com.nam.repository.IResetPasswordTokenRepository;
 import com.nam.service.IEmailService;
+import com.nam.utils.Constant;
 
 @Component
 public class ResetPasswordEventListener implements ApplicationListener<ResetPasswordEvent> {
@@ -28,7 +29,7 @@ public class ResetPasswordEventListener implements ApplicationListener<ResetPass
 		ResetPasswordToken resetPasswordToken;
 		Optional<ResetPasswordToken> opToken = resetPasswordTokenRepo.findByUser(user);
 		if (opToken.isEmpty()) {
-			resetPasswordToken = new ResetPasswordToken(user, 60);
+			resetPasswordToken = new ResetPasswordToken(user, Constant.RESET_PASSWORD_TOKEN_EXPIRATION);
 		} else {
 			resetPasswordToken = opToken.get();
 			resetPasswordToken.resetToken();

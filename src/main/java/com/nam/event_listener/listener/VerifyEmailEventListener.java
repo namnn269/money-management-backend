@@ -12,6 +12,7 @@ import com.nam.entity.VerifyEmailToken;
 import com.nam.event_listener.VerifyEmailEvent;
 import com.nam.repository.IVerifyEmailTokenRepository;
 import com.nam.service.IEmailService;
+import com.nam.utils.Constant;
 
 @Component
 public class VerifyEmailEventListener implements ApplicationListener<VerifyEmailEvent> {
@@ -30,7 +31,7 @@ public class VerifyEmailEventListener implements ApplicationListener<VerifyEmail
 		Optional<VerifyEmailToken> verifyEmailTokenOp = verifyEmailTokenRepo.findByUser(user);
 		VerifyEmailToken verifyEmailToken;
 		if (verifyEmailTokenOp.isEmpty()) {
-			verifyEmailToken = new VerifyEmailToken(user, 60);
+			verifyEmailToken = new VerifyEmailToken(user, Constant.VERIFY_EMAIL_TOKEN_EXPIRATION);
 		} else {
 			verifyEmailToken = verifyEmailTokenOp.get();
 			verifyEmailToken.resetToken();
