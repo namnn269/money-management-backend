@@ -1,6 +1,5 @@
 package com.nam.entity;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -61,9 +59,8 @@ public class User {
 	private List<RefreshToken> refreshToken;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@Default
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+	private Set<Role> roles;
 
 	@OneToMany(mappedBy = "user")
 	private List<Transaction> transactions;

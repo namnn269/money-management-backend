@@ -1,6 +1,8 @@
 package com.nam.controller;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +34,13 @@ import com.nam.dto.response.RefreshTokenResponse;
 import com.nam.dto.response.ResponseMessage;
 import com.nam.dto.response.UpdatedUserResponse;
 import com.nam.entity.RefreshToken;
+import com.nam.entity.Role;
+import com.nam.entity.RoleName;
 import com.nam.entity.User;
 import com.nam.event_listener.VerifyEmailEvent;
 import com.nam.exceptions.ExpiredTokenException;
 import com.nam.exceptions.ObjectNotFoundExeption;
+import com.nam.repository.IRoleRepository;
 import com.nam.security.jwt.JwtProvider;
 import com.nam.security.principal.UserDetailImpl;
 import com.nam.service.IRefreshTokenService;
@@ -54,13 +59,15 @@ public class AuthController {
 	@Autowired
 	private IRefreshTokenService refreshTokenService;
 	@Autowired
+	private IRoleRepository roleRepo;
+	@Autowired
 	private PasswordEncoder encoder;
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
-	private JwtProvider jwtProvider;
-	@Autowired
 	private ApplicationEventPublisher publisher;
+	@Autowired
+	private JwtProvider jwtProvider;
 
 	@PostMapping(value = "/signup")
 	public ResponseEntity<?> signup(@RequestBody FormSignup formSignup, HttpServletRequest request) {
@@ -69,12 +76,17 @@ public class AuthController {
 		if (userService.emailExisted(formSignup.getEmail()))
 			return new ResponseEntity<>(new ResponseMessage("Email has been existed!"), HttpStatus.CONFLICT);
 
+		Set<Role> roles = new HashSet<>();
+		Role roleUser = roleRepo.findByName(RoleName.USER).get(0);
+		roles.add(roleUser);
+		
 		User user = User.builder()
 				.email(formSignup.getEmail())
 				.username(formSignup.getUsername())
 				.password(encoder.encode(formSignup.getPassword()))
 				.avatar(formSignup.getAvatar())
 				.verifiedEmail(false)
+				.roles(roles)
 				.build();
 		userService.save(user);
 		return new ResponseEntity<>(new ResponseMessage("Register successfully"), HttpStatus.CREATED);
