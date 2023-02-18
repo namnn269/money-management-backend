@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +31,13 @@ public class TransactionController {
 
 	@Autowired
 	private ITransactionService transactionService;
+	
+	private final Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
 	@PostMapping
 	public ResponseEntity<?> saveTransaction(@RequestBody TransactionReq transactionReq) {
-		System.out.println(transactionReq);
 		TransactionResponse transaction = transactionService.save(transactionReq);
+		logger.warn("Save transaction, date :{}", transactionReq.getDate() +" - des: " + transactionReq.getDescription());
 		return new ResponseEntity<>(transaction, HttpStatus.CREATED);
 	}
 
@@ -46,7 +50,6 @@ public class TransactionController {
 			@RequestParam(name = "pageSize") int pageSize,
 			@RequestParam(name = "pageNo", defaultValue = "1") int pageNo) {
 		if(pageNo <= 0) pageNo = 1;
-		System.out.println(pageNo);
 		Map<String, Object> responses = transactionService
 				.findByPageAndTime(categorySelectedIds,categoryStatusIds,startDate, endDate,pageSize, pageNo);
 		return new ResponseEntity<>(responses,HttpStatus.OK);

@@ -45,7 +45,6 @@ public class ChartController {
 		java.sql.Date startDateSql = new java.sql.Date(startDate.getTime());
 		java.sql.Date endDateSql = new java.sql.Date(endDate.getTime());
 		List<PieCategoryChartDto> pieChartDtos = chartService.findDataForPieChart(startDateSql, endDateSql, categoryStatusId);
-		System.out.println(pieChartDtos.size());
 		return new ResponseEntity<>(pieChartDtos,HttpStatus.OK);
 	}
 }
