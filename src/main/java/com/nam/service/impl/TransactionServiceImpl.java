@@ -44,7 +44,7 @@ public class TransactionServiceImpl implements ITransactionService {
 		Transaction transaction = Transaction.builder()
 				.id(transactionReq.getId())
 				.amount(transactionReq.getAmount())
-				.date(transactionReq.getDate())
+				.date(new java.sql.Date(transactionReq.getDate().getTime()))
 				.description(transactionReq.getDescription())
 				.category(category)
 				.user(user)
